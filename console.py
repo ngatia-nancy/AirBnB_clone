@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Defines hbnb command interpreter"""
 import cmd
 
 class HBNBCommand(cmd.Cmd):
