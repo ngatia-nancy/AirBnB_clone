@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines hbnb command interpreter"""
+"""Defines the HBnB console."""
 import cmd
 import re
 from shlex import split
@@ -11,6 +11,7 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+
 
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
@@ -29,10 +30,14 @@ def parse(arg):
         retl.append(curly_braces.group())
         return retl
 
-class HBNBCommand(cmd.Cmd):
-    """AirBnB command Interpreter"""
 
-    prompt= "(hbnb)"
+class HBNBCommand(cmd.Cmd):
+    """Defines the HolbertonBnB command interpreter.
+    Attributes:
+        prompt (str): The command prompt.
+    """
+
+    prompt = "(hbnb) "
     __classes = {
         "BaseModel",
         "User",
@@ -43,6 +48,9 @@ class HBNBCommand(cmd.Cmd):
         "Review"
     }
 
+    def emptyline(self):
+        """Do nothing upon receiving an empty line."""
+        pass
 
     def default(self, arg):
         """Default behavior for cmd module when input is invalid"""
@@ -64,19 +72,15 @@ class HBNBCommand(cmd.Cmd):
                     return argdict[command[0]](call)
         print("*** Unknown syntax: {}".format(arg))
         return False
-    
+
     def do_quit(self, arg):
-        """Quit command to exit the program"""
+        """Quit command to exit the program."""
         return True
-    
+
     def do_EOF(self, arg):
-        """Signal to exit the program"""
+        """EOF signal to exit the program."""
         print("")
         return True
-    
-    def emptyline(self):
-        """Execute nothing upon receiving empty line + Enter"""
-        pass
 
     def do_create(self, arg):
         """Usage: create <class>
@@ -201,6 +205,5 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
